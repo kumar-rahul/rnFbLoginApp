@@ -3,8 +3,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Text, View, StyleSheet } from 'react-native';
-import { Fonts } from './assets/fonts'
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { Font } from './assets/fonts'
+import Introduction from './components/onboarding/Introduction'
 
+
+const defaultNavigationOptions1 = {
+    headerStyle: {
+        backgroundColor: '#fff',
+        // shadowColor: 'transparent',
+        // elevation: 1,
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+        // fontFamily: Font.LatoBold,
+        // fontSize: 18,
+        color: '#fff',
+    },
+};
+
+const LoginSignupNavigator = createStackNavigator(
+    {
+        Introduction: {
+            screen: Introduction,
+            navigationOptions: { header: null },
+        },
+    }, { defaultNavigationOptions1, initialRouteName: 'Introduction' });
+
+const NotLoggedIn = createAppContainer(LoginSignupNavigator);
 
 class Routes extends Component {
     constructor(props) {
@@ -22,7 +49,7 @@ class Routes extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>hello world</Text>
+                <NotLoggedIn />                
             </View>
         );
     }
@@ -39,7 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
-        fontFamily: Fonts.LatoBold,
+        // fontFamily: Font.LatoBold,
         fontSize: 30
     },    
 });
